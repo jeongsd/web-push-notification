@@ -1,0 +1,23 @@
+.Home {
+  text-align: center;
+}
+
+.Home-logo {
+  animation: Home-logo-spin infinite 5s linear;
+  height: 80px;
+}
+
+.Home-header {
+  height: 150px;
+  padding: 20px;
+  color: #222;
+}
+
+@keyframes Home-logo-spin {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(2);
+  }
+}
