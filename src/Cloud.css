@@ -100,6 +100,10 @@
 
 /* OBJECTS */
 
+.x1 .cloud {
+  animation: cloud infinite 2s linear;
+}
+
 .cloud {
   background: #fff;
   background: -moz-linear-gradient(top, #fff 5%, #f1f1f1 100%);
@@ -157,4 +161,16 @@
   height: 180px;
   right: 50px;
   top: -90px;
+}
+
+@keyframes cloud {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
