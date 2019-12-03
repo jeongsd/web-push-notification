@@ -55,16 +55,17 @@ server
     }
   });
 
-const INLINE_DB = [];
+let INLINE_DB = [];
 
 server.post("/subscribe", function(req, res) {
   console.log("subscribe with", JSON.stringify(req.body, null, " "));
-  INLINE_DB.push(req.body);
+
+  INLINE_DB = INLINE_DB.filter(pushSub => pushSub.endpoint !== req.body.endpoint)
+  INLINE_DB.push(req.body)
   res.sendStatus(200);
 });
 
 server.post("/notify", function(req, res) {
-  console.log(req.body, INLINE_DB);
   const { message } = req.body;
 
   const options = {

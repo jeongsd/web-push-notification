@@ -25,39 +25,16 @@ const Home = () => {
     });
   }
 
-  function displayNotification() {
-    if (Notification.permission == "granted") {
-      navigator.serviceWorker.getRegistration().then(function(reg) {
-        reg.showNotification("Hello world!", {
-          body: "Here is a notification body!",
-          icon: "octocat.png",
-          vibrate: [100, 50, 100],
-          data: {
-            dateOfArrival: Date.now(),
-            primaryKey: 1
-          },
-          actions: [
-            {
-              action: "explore",
-              title: "Explore this new world",
-              icon: "check.png"
-            },
-            {
-              action: "close",
-              title: "Close notification",
-              icon: "close.png"
-            }
-          ]
-        });
-      });
-    }
-  }
+  function sendSubscribe(subscription) {
+    const sub = JSON.parse(JSON.stringify(subscription));
 
-  function sendSubscribe(sub) {
     return fetch("http://localhost:3000/subscribe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(sub)
+      body: JSON.stringify({
+        endpoint: sub.endpoint,
+        keys: sub.keys
+      })
     });
   }
 
@@ -71,7 +48,6 @@ const Home = () => {
     // 이미 구독중이면 이미 구독중인거 사용
     const sub = await reg.pushManager.getSubscription();
     if (sub) {
-      console.log("/", sub);
       await sendSubscribe(sub);
       return;
     }
@@ -100,8 +76,7 @@ const Home = () => {
         <h2>Web Push Notification</h2>
 
         <button onClick={handleClickRequestPermission}>권한 요청하기</button>
-        <button onClick={displayNotification}>Hello world!</button>
-        <button onClick={subscribeUser}>구독</button>
+        <button onClick={subscribeUser}>구독</button>        
       </div>
     </div>
   );
